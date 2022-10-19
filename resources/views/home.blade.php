@@ -7,14 +7,28 @@
             <div class="card">
                 <div class="card-header">{{ __('Dashboard') }}</div>
 
-                <div class="card-body">
-                    @if (session('status'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
-                        </div>
-                    @endif
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Title</th>
+                        <th scope="col">Content</th>
+                        <th scope="col">Category</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @foreach($blog_posts as $post)
+                    <tr>
+                        <th >{{$post->blog_post_id}}</th>
+                        <td>{{$post->title}}</td>
+                        <td><a href="{{route('show', ['blog_post_id'=>$post->blog_post_id])}}">{{$post->content}}</a></td>
+                        <td>{{$post->category->name}}</td>
+                    </tr>
+                    @endforeach
+                    </tbody>
+                </table>
 
-                    {{ __('You are logged in!') }}
+
                 </div>
             </div>
         </div>
