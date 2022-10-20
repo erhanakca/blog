@@ -5,15 +5,15 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">{{ __('Dashboard') }}</div>
-
+                <div class="card-header">{{ __('BLOG') }}</div>
                 <table class="table">
                     <thead>
                     <tr>
                         <th scope="col">#</th>
-                        <th scope="col">Title</th>
-                        <th scope="col">Content</th>
-                        <th scope="col">Category</th>
+                        <th scope="col"><h4>Title</h4></th>
+                        <th scope="col"><h4>Content</h4></th>
+                        <th scope="col"><h4>Category</h4></th>
+                        <th scope="col"><h4>Actions</h4></th>
                     </tr>
                     </thead>
                     <tbody>
@@ -23,12 +23,12 @@
                         <td>{{$post->title}}</td>
                         <td><a href="{{route('show', ['blog_post_id'=>$post->blog_post_id])}}">{{$post->content}}</a></td>
                         <td>{{$post->category->name}}</td>
+                        <td><a href="{{route('delete_post', ['blog_post_id'=>$post->blog_post_id])}}" class="btn btn-sm btn-warning mb-1">Delete</a>
+                            <a href="{{route('edit_post', ['blog_post_id'=>$post->blog_post_id])}}" class="btn btn-sm btn-info">Update</a></td>
                     </tr>
                     @endforeach
                     </tbody>
                 </table>
-
-
                 </div>
             </div>
         </div>

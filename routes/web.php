@@ -21,4 +21,8 @@ Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/post/{blog_post_id}', [\App\Http\Controllers\BlogpostController::class, 'show'])->name('show');
+Route::get('/post/delete/{blog_post_id}', [\App\Http\Controllers\BlogpostController::class, 'delete'])->name('delete_post');
+Route::get('/post/update/{blog_post_id}', [\App\Http\Controllers\BlogpostController::class, 'edit'])->name('edit_post');
+Route::post('post/update', [\App\Http\Controllers\BlogpostController::class, 'update'])->name('update_post');
+
 
