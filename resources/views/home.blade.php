@@ -6,6 +6,7 @@
         <div class="col-md-8">
             <div class="card">
                 <div class="card-header">{{ __('BLOG') }}</div>
+
                 <table class="table">
                     <thead>
                     <tr>
@@ -23,13 +24,14 @@
                         <td>{{$post->title}}</td>
                         <td><a href="{{route('show', ['blog_post_id'=>$post->blog_post_id])}}">{{$post->content}}</a></td>
                         <td>{{$post->category->name}}</td>
-                        <td><a href="{{route('delete_post', ['blog_post_id'=>$post->blog_post_id])}}" class="btn btn-sm btn-warning mb-1">Delete</a>
-                            <a href="{{route('edit_post', ['blog_post_id'=>$post->blog_post_id])}}" class="btn btn-sm btn-info">Update</a></td>
+                        <td><a href="{{route('delete_post', ['blog_post_id'=>$post->blog_post_id])}}" class="btn btn-sm btn-danger mb-1">Delete</a>
+                            <a href="{{route('edit_post', ['blog_post_id'=>$post->blog_post_id])}}" class="btn btn-sm btn-warning">Update</a></td>
                     </tr>
                     @endforeach
                     </tbody>
                 </table>
                 </div>
+            <a class="btn btn-sm btn-primary" href="{{route('add_post')}}">Post Add</a>
             </div>
         </div>
     </div>

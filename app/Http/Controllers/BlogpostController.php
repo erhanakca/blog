@@ -36,4 +36,29 @@ class BlogpostController extends Controller
         $blog_posts = Blogpost::where('user_id', auth()->user()->user_id)->with('category')->get();
         return view('home', ['blog_posts'=>$blog_posts]);
     }
+
+    public function add()
+    {
+        $categories = Category::all();
+        return view('add_post', ['categories'=>$categories]);
+    }
+    public function create(Request $request)
+    {
+        $data = $request->all();
+        /*$blog_post = new Blogpost();
+        $blog_post->title = $data['title'];
+        $blog_post->content = $data['content'];
+        $blog_post->category_id = $data['category_id'];
+        $blog_post->save();*/
+
+        $blog_post = Blogpost::create([
+            'title'=> $data['title'],
+            'content'=> $data['content'],
+            'user_id' => $request->user()->user_id,
+            'image_url' => $data['image_url'] ?? null,
+            'category_id' => $data['category_id']
+        ]);
+        return view('post_detail', ['blog_post'=>$blog_post]);
+    }
+
 }
