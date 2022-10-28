@@ -33,6 +33,12 @@
                                 @endforeach
                             </select>
                         </div>
+
+                        <div class="mb-3">
+                            <label for="name" class="form-label">OR Category Name</label>
+                            <input class="form-control" id="name" name="manuel_add">
+                        </div>
+
                         <button class="btn btn-sm btn-primary" type="submit">Create</button>
                         <a href="{{route('home')}}" class="btn btn-sm btn-primary ">Geri Dön</a>
                     </form>

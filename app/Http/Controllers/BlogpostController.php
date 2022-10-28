@@ -51,14 +51,29 @@ class BlogpostController extends Controller
         $blog_post->category_id = $data['category_id'];
         $blog_post->save();*/
 
-        $blog_post = Blogpost::create([
-            'title'=> $data['title'],
-            'content'=> $data['content'],
-            'user_id' => $request->user()->user_id,
-            'image_url' => $data['image_url'] ?? null,
-            'category_id' => $data['category_id']
-        ]);
-        return view('post_detail', ['blog_post'=>$blog_post]);
+        if ($data['category_id'] == 'Select Category')
+        {
+            $category = Category::create([
+               'name' => $data['manuel_add']
+            ]);
+            Blogpost::create([
+                'title'=> $data['title'],
+                'content'=> $data['content'],
+                'user_id' => $request->user()->user_id,
+                'image_url' => $data['image_url'] ?? null,
+                'category_id' => $category->category_id,
+            ]);
+        }else {
+            Blogpost::create([
+                'title'=> $data['title'],
+                'content'=> $data['content'],
+                'user_id' => $request->user()->user_id,
+                'image_url' => $data['image_url'] ?? null,
+                'category_id' => $data['category_id'],
+            ]);
+        }
+        $blog_posts = Blogpost::where('user_id', auth()->user()->user_id)->get();
+        return view('home', ['blog_posts'=>$blog_posts]);
     }
 
 }

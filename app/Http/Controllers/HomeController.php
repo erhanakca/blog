@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Blogpost;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -22,11 +23,20 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function index()
+    public function home()
     {
         $blog_posts = Blogpost::where('user_id', auth()->user()->user_id)
             ->with('category')
             ->get();
         return view('home', ['blog_posts' => $blog_posts]);
     }
+
+    public function index()
+    {
+        $blog_posts = Blogpost::where('user_id', '!=', auth()->user()->user_id)
+            ->with('category', 'user')
+            ->get();
+        return view('index', ['blog_posts' => $blog_posts]);
+    }
+
 }

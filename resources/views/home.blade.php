@@ -32,6 +32,7 @@
                 </table>
                 </div>
             <a class="btn btn-sm btn-primary" href="{{route('add_post')}}">Post Add</a>
+            <a class="btn btn-sm btn-primary" href="{{route('category_show')}}">Categories</a>
             </div>
         </div>
     </div>
