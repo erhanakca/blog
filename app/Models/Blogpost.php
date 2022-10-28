@@ -28,4 +28,9 @@ class Blogpost extends Model
     {
         return $this->hasOne(Category::class, 'category_id', 'category_id');
     }
+
+    public function likes()
+    {
+        return $this->hasMany(Blogpostshaslikes::class, 'blog_post_id', 'blog_post_id');
+    }
 }

@@ -35,3 +35,6 @@ Route::get('/category/edit/{category_id}', [\App\Http\Controllers\CategoryContro
 Route::post('/category/update', [\App\Http\Controllers\CategoryController::class, 'update'])->name('update_category');
 Route::get('/category/add', [\App\Http\Controllers\CategoryController::class, 'add'])->name('category_add');
 Route::post('category/creat', [\App\Http\Controllers\CategoryController::class, 'creat'])->name('category_creat');
+
+Route::get('/like/{blog_post_id}', [\App\Http\Controllers\BlogpostshaslikesController::class, 'like'])->name('like');
+Route::get('/unlike/{blog_post_id}', [\App\Http\Controllers\BlogpostshaslikesController::class, 'unlike'])->name('unlike');

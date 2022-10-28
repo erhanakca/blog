@@ -42,4 +42,9 @@ class User extends Authenticatable
     {
         return $this->name . ' ' . $this->surname;
     }
+
+    public function likes()
+    {
+        return $this->hasMany(Blogpostshaslikes::class, 'user_id', 'user_id');
+    }
 }

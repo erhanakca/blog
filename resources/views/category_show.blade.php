@@ -27,7 +27,7 @@
                         </tbody>
                     </table>
                 </div>
-                <a class="btn btn-sm btn-primary me-5" href="{{route('category_add')}}">Category Add</a>
+                <a class="btn btn-sm btn-primary" href="{{route('category_add')}}">Category Add</a>
                 <a class="btn btn-sm btn-primary" href="{{route('home')}}">Back</a>
             </div>
         </div>
