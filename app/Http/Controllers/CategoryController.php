@@ -61,4 +61,6 @@ class CategoryController extends Controller
         $categories = Category::all();
         return view('category_show', ['categories'=>$categories]);
     }
+
+
 }

@@ -6,10 +6,19 @@ use App\Http\Requests\StoreBlogPostRequest;
 use App\Http\Requests\UpdateBlogPostRequest;
 use App\Models\Blogpost;
 use App\Models\Category;
+use App\Repository\Eloquent\BlogPostRepository;
+use App\Repository\Interfaces\BlogPostRepositoryInterface;
 use Illuminate\Http\Request;
 
 class BlogpostController extends Controller
 {
+    private $blogPostRepository;
+
+    public function __construct(BlogPostRepositoryInterface $blogPostRepository)
+    {
+        $this->blogPostRepository = $blogPostRepository;
+    }
+
     public function show($blog_post_id)
     {
         $blog_post = Blogpost::where('blog_post_id', $blog_post_id)->with('category', 'user', 'likes')->first();
@@ -23,9 +32,8 @@ class BlogpostController extends Controller
     }
     public function edit($blog_post_id)
     {
-        $blog_post = Blogpost::find($blog_post_id);
         $categories = Category::all();
-        return view('update_post', ['blog_post'=>$blog_post, 'categories'=>$categories]);
+        return view('update_post', ['blog_post'=>$this->blogPostRepository->find($blog_post_id), 'categories'=>$categories]);
     }
     public function update(UpdateBlogPostRequest $request)
     {
@@ -56,7 +64,6 @@ class BlogpostController extends Controller
 
         if ($data['category_id'] == 'Select Category')
         {
-
             $category = Category::create([
                'name' => $data['manuel_add']
             ]);
@@ -79,5 +86,7 @@ class BlogpostController extends Controller
         $blog_posts = Blogpost::where('user_id', auth()->user()->user_id)->with('likes')->get();
         return view('home', ['blog_posts'=>$blog_posts]);
     }
+
+
 
 }

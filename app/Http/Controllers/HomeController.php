@@ -4,11 +4,15 @@ namespace App\Http\Controllers;
 
 use App\Models\Blogpost;
 use App\Models\User;
+use App\Repository\Interfaces\BlogPostRepositoryInterface;
 use Illuminate\Http\Request;
 use function GuzzleHttp\Promise\exception_for;
 
 class HomeController extends Controller
 {
+    private $blogPostRepository;
+
+
     /**
      * Create a new controller instance.
      *
