@@ -15,9 +15,9 @@ class Blogpostshaslikes extends Model
         'user_id'
     ];
 
-    public function users()
+    public function user()
     {
-        return $this->hasMany(User::class, 'user_id', 'user_id');
+        return $this->hasOne(User::class, 'user_id', 'user_id');
     }
 
     public function blogPosts()

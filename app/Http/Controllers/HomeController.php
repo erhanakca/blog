@@ -27,7 +27,7 @@ class HomeController extends Controller
     public function home()
     {
         $blog_posts = Blogpost::where('user_id', auth()->user()->user_id)
-            ->with('category')
+            ->with('category', 'likes')
             ->get();
         return view('home', ['blog_posts' => $blog_posts]);
     }
@@ -42,15 +42,4 @@ class HomeController extends Controller
 }
 
 
-/*[0]->contains(auth()->user()->user_id)*/
 
-
-/*foreach ($blog_posts as $post)
-{
-    dump($post->likes->count());
-    if($post->likes->count() > 0)
-    {
-        dump($post->likes[0]->where('user_id', auth()->user()->user_id)->first());
-    }
-}
-die();*/

@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreBlogPostRequest;
+use App\Http\Requests\UpdateBlogPostRequest;
 use App\Models\Blogpost;
 use App\Models\Category;
 use Illuminate\Http\Request;
@@ -10,13 +12,13 @@ class BlogpostController extends Controller
 {
     public function show($blog_post_id)
     {
-        $blog_post = Blogpost::where('blog_post_id', $blog_post_id)->with('category', 'user')->first();
+        $blog_post = Blogpost::where('blog_post_id', $blog_post_id)->with('category', 'user', 'likes')->first();
         return view('post_detail', ['blog_post'=>$blog_post]);
     }
     public function delete($blog_post_id)
     {
         Blogpost::find($blog_post_id)->delete();
-        $blog_posts = Blogpost::where('user_id', auth()->user()->user_id)->with('category')->get();
+        $blog_posts = Blogpost::where('user_id', auth()->user()->user_id)->with('category', 'likes')->get();
         return view('home', ['blog_posts'=>$blog_posts]);
     }
     public function edit($blog_post_id)
@@ -25,15 +27,15 @@ class BlogpostController extends Controller
         $categories = Category::all();
         return view('update_post', ['blog_post'=>$blog_post, 'categories'=>$categories]);
     }
-    public function update(Request $request)
+    public function update(UpdateBlogPostRequest $request)
     {
-        $data = $request->all();
+        $data = $request->validated();
         Blogpost::find($data['blog_post_id'])->update([
             'title'=>$data['title'],
             'content'=>$data['content'],
             'category_id'=>$data['category_id']
         ]);
-        $blog_posts = Blogpost::where('user_id', auth()->user()->user_id)->with('category')->get();
+        $blog_posts = Blogpost::where('user_id', auth()->user()->user_id)->with('category', 'likes')->get();
         return view('home', ['blog_posts'=>$blog_posts]);
     }
 
@@ -42,9 +44,10 @@ class BlogpostController extends Controller
         $categories = Category::all();
         return view('add_post', ['categories'=>$categories]);
     }
-    public function create(Request $request)
+
+    public function create(StoreBlogPostRequest $request)
     {
-        $data = $request->all();
+        $data = $request->validated();
         /*$blog_post = new Blogpost();
         $blog_post->title = $data['title'];
         $blog_post->content = $data['content'];
@@ -53,6 +56,7 @@ class BlogpostController extends Controller
 
         if ($data['category_id'] == 'Select Category')
         {
+
             $category = Category::create([
                'name' => $data['manuel_add']
             ]);
@@ -72,7 +76,7 @@ class BlogpostController extends Controller
                 'category_id' => $data['category_id'],
             ]);
         }
-        $blog_posts = Blogpost::where('user_id', auth()->user()->user_id)->get();
+        $blog_posts = Blogpost::where('user_id', auth()->user()->user_id)->with('likes')->get();
         return view('home', ['blog_posts'=>$blog_posts]);
     }
 

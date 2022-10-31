@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Blogpost;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class CategoryController extends Controller
 {
@@ -29,7 +30,12 @@ class CategoryController extends Controller
 
     public function update(Request $request)
     {
-        $data = $request->all();
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|max:20|string',
+            'category_id' => 'required'
+        ]);
+
+        $data = $validator->validated();
         Category::find($data['category_id'])->update([
             'name' => $data['name']
         ]);
@@ -44,8 +50,11 @@ class CategoryController extends Controller
 
     public function creat(Request $request)
     {
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|max:20|string'
+        ]);
 
-        $data = $request->all();
+        $data = $validator->validated();
         Category::create([
             'name' => $data['name']
         ]);

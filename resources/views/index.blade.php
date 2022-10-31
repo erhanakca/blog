@@ -22,7 +22,7 @@
                             <tr>
                                 <th>{{$post->user->name}}</th>
                                 <th>{{$post->title}}</th>
-                                <td>{{$post->content}}</td>
+                                <td><a href="{{route('show', ['blog_post_id' => $post->blog_post_id])}}">{{$post->content}}</a></td>
                                 <td>{{$post->category->name}}</td>
 
                                 @if($post->likes->where('user_id', auth()->user()->user_id)->first() != null)
